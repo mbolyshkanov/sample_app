@@ -1,0 +1,246 @@
+# list of commands
+
+#ssh key
+	#generate rsa key
+	cd ~/.ssh
+	ssh-keygen -t rsa -C "your_email@youremail.com"
+	ssh-add ~/.ssh/id_rsa
+	xclip -sel clip < ~/.ssh/id_rsa.pub# Copies the contents of the id_rsa.pub file to your clipboard
+
+#git
+	
+	git init
+
+	git remote add origin https://github.com/mbolyshkanov/sample_app.git
+
+	#no password add to github
+	git remote add origin git@github.com:mbolyshkanov/sample_app.git
+
+	git checkout -b branch-name
+	git checkout -f
+
+	git diff
+
+	#rename/move file
+	git mv from-file-name.oldext to-file.name.newext
+
+	#delete file
+	git rm public/index.html
+
+	git add .
+	git commit - m "Message"
+	git checkout master
+	git merge branch-name
+
+	git push -u origin master
+
+	git push
+	git push heroku
+
+	git status
+
+#heroku
+
+	#?
+	heroku create --stack cedar
+
+	#open
+	heroku open
+
+	#migrate database
+	heroku run rake db:migrate
+
+	#console
+	heroku run console
+
+	#rename
+	heroku rename newname
+
+	#logs
+	heroku logs
+
+#bundle
+
+	#install
+	bundle install --without production
+
+	#uninstall
+	gem uninstall rspec-core
+
+	#update
+	bundle update rspec-core
+
+	#show
+	bundle show bootstrap-sass
+
+	#exec
+
+		#rake
+
+			#migrate
+			bundle exec rake db:migrate
+
+			#migrate to test
+			bundle exec rake db:test:prepare
+			bundle exec rake db:test:prepare --trace
+
+			#reset database
+			bundle exec rake db:reset
+
+			#roll back
+			bundle exec rake db:rollback
+
+		#testing
+
+			#run test with spork server command
+			bundle exec guard
+
+			#run rspec test command
+			bundle exec rspec spec/
+
+			#run rspec test command against target file
+			bundle exec rspec spec/path/targetfile.rb
+
+			#run rspect test command against target file and specific test
+			bundle exec rspec spec/path/targetfile.rb -e "specific test"
+
+			#run cucumber test command
+			bundle exec cucumber features/
+
+		#anotate
+			bundle exec annotate
+
+#sudo pat-get install
+
+	#ruby on rails
+	sudo apt-get update
+	sudo apt-get -y install git
+	sudo apt-get -y install curl
+	curl -L get.rvm.io | bash -s stable
+	sudo apt-get -y install build-essential openssl libreadline6 libreadline6-dev zlib1g zlib1g-dev libssl-dev libyaml-dev libsqlite3-0 libsqlite3-dev sqlite3 libxml2-dev libxslt-dev autoconf libc6-dev ncurses-dev automake libtool bison subversion nodejs
+	restart terminal
+	rvm install 1.9.3
+	rvm --default use 1.9.3
+	gem install rails
+	rvm use 1.9.3@rails3tutorial2ndEd --create --default
+
+	#database browser
+	sudo apt-get install sqlitebrowser
+
+	#database library
+	sudo apt-get install libpq-dev
+
+	#databases
+	sudo apt-get install postgresql
+	sudo apt-get install mysql-server
+
+	#file copy/paste
+	sudo apt-get install xclip
+
+	#text editor
+
+		#install sublime text 2
+		sudo add-apt-repository ppa:webupd*team/sublime-text-2
+		sudo apt-get update
+		sudo apt-get install sublime-text
+
+		#sublime text 2 Ruby Test
+		cd ~/.config/sublime-text-2/Packages/
+		git clone https://github.com/maltize/sublime-text-2-ruby-tests.git RubyTest
+
+#gem
+
+	#list install gems
+	gem list rspec
+
+	#install
+
+		#test
+		gem install rspec
+		gem install rspec-rails
+
+		#database
+		gem install pg -v '0.12.2'
+
+
+#rails
+
+	#new
+	rails new sample_app --skip-test-unit
+
+	#generate
+
+		#model
+		rails generate model User name:string email:string
+
+		#controller
+		rails generate controller ControllerName name('s) --no-test-framework
+
+		#integration test
+		rails generate integration_test folder_name
+
+		#test rspec install
+		rails generate rspec:install
+
+		#test cucumber install
+		rails generate cucumber:install
+
+		#database
+		rails generate migration describe_migration_name
+		rails generate migration add_password_digest_to_users password_digest:string
+
+		#scaffold
+		rails generate scaffold Micropost content:string user_id:integer
+
+	#destroy
+		#controller
+		rails destroy controller ControllerName
+
+	#console
+		rails console [environment] [options]
+	    -s, --sandbox                    Rollback database modifications on exit.
+	        --debugger                   Enable ruby-debugging for the console.
+
+	#server
+		rails server
+
+#bash terminal
+		
+	#color configuration
+		export PS1='\t \[\e[0;32m\]\u\[\e[m\]@\[\e[0;36m\]\h\[\e[m\] \W$(__git_ps1 " \[\e[0;35m\](%s)\[\e[m\]")\$ '
+
+	#native commands
+
+		#delete file or folder
+		rm file or folder
+
+		#list files and folders
+		ls
+
+		#present file contents in the terminal
+		less filename
+
+#Links
+
+
+
+	http://jaysonrowe.blogspot.com/2011/09/setting-up-ubuntu-for-rails.html
+	https://github.com/rkjha/RailsOnUbuntu/blob/master/rails-installer.sh
+	http://wbond.net/sublime_packages/package_control/installation
+	https://github.com/GeoRemindMe/GeoRemindMe_Web/wiki/How-to-set-up-your-repository
+	http://blog.wuwon.id.au/2010/09/painless-merge-conflict-resolution-in.html
+	http://eddie-moore.com/2012/02/installing-sublime-text-2-on-ubuntu/
+	http://blogging.dragon.org.uk/index.php/mini-howtos/howto-install-beyondcompare-on-64-bit-ub
+	http://gitguru.com/2009/02/22/integrating-git-with-a-visual-merge-tool/
+	debugging: http://guides.rubyonrails.org/debugging_rails_applications.html
+	https://help.github.com/articles/generating-ssh-keys
+
+
+ 
+
+
+
+
+
+
+
