@@ -47,8 +47,18 @@
 	#open
 	heroku open
 
+	#reset database
+	heroku pg:reset <DATABASE> 
+
 	#migrate database
 	heroku run rake db:migrate
+
+
+	#populate database
+	heroku run rake db:populate
+
+	#get database url
+	heroku config | grep POSTGRESQL
 
 	#console
 	heroku run console
@@ -80,6 +90,9 @@
 			#migrate
 			bundle exec rake db:migrate
 
+			#populate
+			bundle exec rake db:populate
+
 			#migrate to test
 			bundle exec rake db:test:prepare
 			bundle exec rake db:test:prepare --trace
@@ -110,7 +123,7 @@
 		#anotate
 			bundle exec annotate
 
-#sudo pat-get install
+#sudo apt-get install
 
 	#ruby on rails
 	sudo apt-get update
@@ -136,6 +149,9 @@
 
 	#file copy/paste
 	sudo apt-get install xclip
+
+	#heroku tool-belt
+	wget -qO- https://toolbelt.heroku.com/install-ubuntu.sh | sh
 
 	#text editor
 
