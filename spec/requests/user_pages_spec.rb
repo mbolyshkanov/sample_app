@@ -4,9 +4,10 @@ describe "Users pages" do
 
 	subject { page }
 
-	decribe "index" do
+	describe "index" do
 
 		let(:user) { FactoryGirl.create(:user) }
+
 
 
 		before do
@@ -19,13 +20,14 @@ describe "Users pages" do
 
 		describe "pagination" do
 			before(:all) { 30.times { FactoryGirl.create(:user) } }
-			after(:all) { User.delet_all }
+			after(:all) { User.delete_all }
 
 			it { should have_selector('div.pagination') }
 
 			it "should list each user" do
 				User.paginate(page: 1).each do |user|
-				page.should have_selector('li', text:user.name)
+					page.should have_selector('li', text:user.name)
+				end
 			end
 		end
 
@@ -107,14 +109,20 @@ describe "Users pages" do
 	describe "profile page" do
 
 		let(:user) { FactoryGirl.create(:user) }
+		let(:m1) { FactoryGirl.create(:micropost, user: :user, content: "Foo") }
+		let(:m2) { FactoryGirl.create(:micropost, user: :user, content: "Bar") }
 
 		before { visit user_path(user) }
 		
 		it { should have_selector('h1', text: user.name) }
 		it { should have_selector('title', text: user.name) }
 
+		describe "Microposts" do
+			it { should have_content(m1.content) }
+			it { should have_content(m2.content) }
+			it { should have_content(user.microposts.count) }
+		end
 	end
-	
 
 	describe "edit" do
 		let(:user) { FactoryGirl.create(:user) }
@@ -153,4 +161,4 @@ describe "Users pages" do
 			specify { user.reload.email.should == new_email }
 		end
 	end
-end 
+end

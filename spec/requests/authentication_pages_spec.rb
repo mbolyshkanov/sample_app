@@ -1,47 +1,48 @@
 require 'spec_helper'
 
 describe "Authentication" do
-  subject { page }
+	subject { page }
 
-  describe "signin page" do
-  	before { visit siginin_page }
+  	describe "signin page" do
+  		before { visit siginin_page }
 
-  	it { should have_selector('h1', text: 'Sign in')}
-  	it { should have_selector('title', text: 'Sign in')}
-  end
+  		it { should have_selector('h1', text: 'Sign in')}
+  		it { should have_selector('title', text: 'Sign in')}
+ 	end
 
-   describe "signin" do
-  	before { visit siginin_page }
+   	describe "signin" do
+	  	before { visit siginin_page }
 
-  	describe "with invalid information" do
-  		before { click_button "Sign in"}
+	  	describe "with invalid information" do
+	  		before { click_button "Sign in"}
 
-	  	it { should have_selector('title', text: 'Sign in')}
-	  	it { should have_selector('div.alert.alert-error', text: 'invalid')}
+		  	it { should have_selector('title', text: 'Sign in')}
+		  	it { should have_selector('div.alert.alert-error', text: 'invalid')}
 
-	  	describe "after visiting another page" do
-	  		before { click_link "Home" }
-	  		it { should_not have_selector('div.alert.alert-error') }
-	  	end
-	end
+		  	describe "after visiting another page" do
+		  		before { click_link "Home" }
+		  		it { should_not have_selector('div.alert.alert-error') }
+		  	end
+		end
 
-	describe "with valid information" do
-		let(:user) {FactoryGirl.create(:user) }
+		describe "with valid information" do
+			let(:user) { FactoryGirl.create(:user) }
 
-		before { sign_in user }
+			before { sign_in user }
 
-		it { should have_selector('title', text: user.name) }
+			it { should have_selector('title', text: user.name) }
 
-		it { should have_link('Users', href: users_path }
-		it { should have_link('Profile', href: user_path(user)) }
-		it { should have_link('Settings', href: edit_user_path(user)) }
-		it { should have_link('Sign out', href: signout_path) }
+			it { should have_link('Users', href: users_path) }
+			it { should have_link('Profile', href: user_path(user)) }
+			it { should have_link('Settings', href: edit_user_path(user)) }
+			it { should have_link('Sign out', href: signout_path) }
 
-		it { should_not have_link('Sign in', href: signin_path) }
+			it { should_not have_link('Sign in', href: signin_path) }
 
-		describe "followed by signout" do
-			before { click_link "Sign out" }
-			it { should have_link('Sign in')}
+			describe "followed by signout" do
+				before { click_link "Sign out" }
+				it { should have_link('Sign in') }
+			end
 		end
 	end
 
@@ -94,11 +95,24 @@ describe "Authentication" do
 					it { should have_selector('title', text: 'Sign in') }
 				end
 			end
+
+			describe "in the Microposts controller" do
+
+				describe "submitting to the create action" do
+					before { post microposts_path }
+					specify { response.should redirect_to(signin_path) }
+				end
+
+				describe "submitting to the destroy action" do
+					before { delete micropost_path(FactoryGirl.create(:micropost)) }
+					specify { response.should redirect_to(signin_path) }
+				end
+			end
 		end
 
 		describe "as wrong user" do
 			let(:user) { FactoryGirl.create(:user) }
-			let(:wrong_user) { FactoryGirl.create(:user, :email: "wrong@example.com") }
+			let(:wrong_user) { FactoryGirl.create(:user, email: "wrong@example.com") }
 			before { sign_in user }
 
 			describe "visiting Users#edit page" do
@@ -108,7 +122,7 @@ describe "Authentication" do
 
 			describe "submitting a PUT request to the Users#update action" do
 				before { put user_path(wrong_user) }
-				specify { response.should redirect_toroot_path) }
+				specify { response.should redirect_to(root_path) }
 			end
 		end
 
@@ -124,5 +138,4 @@ describe "Authentication" do
 			end
 		end
 	end
-  end
 end
